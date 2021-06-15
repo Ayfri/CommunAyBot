@@ -36,45 +36,44 @@ class Information : Extension() {
 							inline = true
 						}
 						
-						val membersPresences = members.filterNot { it.isBot }.groupBy { it.getPresenceOrNull()?.status }
+						val membersPresences = members.filterNot { it.isBot }.map { it.getPresenceOrNull()?.status }
 						
-						val bots = members.filter { it.isBot }
-						val online = membersPresences[PresenceStatus.Online]
-						val idle = membersPresences[PresenceStatus.Idle]
-						val dnd = membersPresences[PresenceStatus.DoNotDisturb]
-						val invisible = membersPresences[PresenceStatus.Invisible]
-						val offline = membersPresences[null]!!.toMutableList()
-						offline.addAll(invisible ?: emptyList())
+						val bots = members.count { it.isBot }
+						val online = membersPresences.count { it == PresenceStatus.Online }
+						val idle = membersPresences.count { it == PresenceStatus.Idle }
+						val dnd = membersPresences.count { it == PresenceStatus.DoNotDisturb }
+						val invisible = membersPresences.count { it == PresenceStatus.Invisible }
+						val offline = membersPresences.count { it == null }
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.members.title")
 							value = translate(
 								"extensions.informations.guild-info.embed.fields.members.value",
-								arrayOf(members, online, idle, dnd, offline, bots).map { it?.size ?: 0 }.toTypedArray()
+								arrayOf(members.size, online, idle, dnd, offline + invisible, bots)
 							)
 							inline = true
 						}
 						
-						val channelsTypes = channels.groupBy { it.type }
+						val channelsTypes = channels.map { it.type }
 						
-						val textual = channelsTypes[ChannelType.GuildText]
-						val vocals = channelsTypes[ChannelType.GuildVoice]
-						val categories = channelsTypes[ChannelType.GuildCategory]
-						val announces = channelsTypes[ChannelType.GuildNews]
-						val stages = channelsTypes[ChannelType.GuildStageVoice]
+						val textual = channelsTypes.count { it == ChannelType.GuildText }
+						val vocals = channelsTypes.count { it == ChannelType.GuildVoice }
+						val categories = channelsTypes.count { it == ChannelType.GuildCategory }
+						val announces = channelsTypes.count { it == ChannelType.GuildNews }
+						val stages = channelsTypes.count { it == ChannelType.GuildStageVoice }
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.channels.title")
 							value = translate(
 								"extensions.informations.guild-info.embed.fields.channels.value",
-								arrayOf(channels, textual, vocals, categories, announces, stages).map { it?.size ?: 0 }.toTypedArray()
+								arrayOf(channels.size, textual, vocals, categories, announces, stages)
 							)
 							inline = true
 						}
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.roles.title")
-							value = guild!!.roles.toList().sortedBy { it.rawPosition }.filterNot { it.managed }.asReversed().joinToString("\n") { it.mention }
+							value = guild!!.roles.toList().filterNot { it.managed }.sortedBy { -it.rawPosition }.joinToString("\n") { it.mention }
 							inline = true
 						}
 					}
