@@ -16,7 +16,7 @@ version = "0.1"
 repositories {
     maven {
         name = "Kotlin Discord"
-        url = uri("https://maven.kotlindiscord.com/repository/maven-public/")
+        setUrl("https://maven.kotlindiscord.com/repository/maven-public/")
     }
 }
 
@@ -30,6 +30,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
     implementation("org.codehaus.groovy:groovy:$groovyVersion")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 
