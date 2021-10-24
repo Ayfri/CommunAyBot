@@ -6,7 +6,8 @@ import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.MessageCreateBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
+import dev.kord.rest.builder.message.create.embed
 import kotlinx.datetime.Clock
 
 suspend inline fun MessageCreateBuilder.basicEmbed(builder: EmbedBuilder.() -> Unit) {
@@ -14,7 +15,7 @@ suspend inline fun MessageCreateBuilder.basicEmbed(builder: EmbedBuilder.() -> U
 		val user = bot.getKoin().get<Kord>().getSelf(EntitySupplyStrategy.cacheWithRestFallback)
 		
 		footer {
-			icon = user.avatar.url
+			icon = user.avatar?.url
 			text = user.username
 		}
 		
@@ -28,7 +29,7 @@ suspend inline fun TextChannel.basicEmbed(builder: EmbedBuilder.() -> Unit) {
 		val user = bot.getKoin().get<Kord>().getSelf(EntitySupplyStrategy.cacheWithRestFallback)
 		
 		footer {
-			icon = user.avatar.url
+			icon = user.avatar?.url
 			text = user.username
 		}
 		

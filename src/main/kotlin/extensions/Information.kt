@@ -3,6 +3,7 @@ package extensions
 import adChannelID
 import com.kotlindiscord.kord.extensions.checks.inGuild
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.extensions.chatCommand
 import communAyfriID
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.PresenceStatus
@@ -18,11 +19,11 @@ class Information : Extension() {
 	override val name: String = "Information"
 	
 	override suspend fun setup() {
-		command {
+		chatCommand {
 			name = "extensions.informations.guild-info.name"
 			description = "extensions.informations.guild-info.description"
 			aliasKey = "extensions.informations.guild-info.aliases"
-			check(inGuild(communAyfriID))
+			check { inGuild(communAyfriID) }
 			
 			action {
 				message.reply {
@@ -32,7 +33,7 @@ class Information : Extension() {
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.owner.title")
-							value = "${guild!!.owner.mention} (`${guild!!.ownerId.asString}`)"
+							value = "${guild!!.asGuild().owner.mention} (`${guild!!.asGuild().ownerId.asString}`)"
 							inline = true
 						}
 						
@@ -81,11 +82,11 @@ class Information : Extension() {
 			}
 		}
 		
-		command {
+		chatCommand {
 			name = "extensions.informations.ad.name"
 			description = "extensions.informations.ad.description"
 			aliasKey = "extensions.informations.ad.aliases"
-			check(inGuild(communAyfriID))
+			check { inGuild(communAyfriID) }
 			
 			action {
 				val adChannel = guild!!.channels.first { it.id == adChannelID } as TextChannel
@@ -97,7 +98,7 @@ class Information : Extension() {
 			}
 		}
 		
-		command {
+		chatCommand {
 			name = "Ayfri"
 			description = "extensions.informations.ayfri.description"
 			
@@ -108,14 +109,15 @@ class Information : Extension() {
 			}
 		}
 		
-		command {
+		chatCommand {
 			name = "test"
 			description = "test"
-			check(inGuild(communAyfriID), isOwner())
-			
-			action {
-			
+			check {
+				isOwner()
+				if (!passed) inGuild(communAyfriID)
 			}
+			
+			action {}
 		}
 	}
 }

@@ -1,15 +1,11 @@
 package utils
 
-import com.kotlindiscord.kord.extensions.checks.CheckFun
 import com.kotlindiscord.kord.extensions.checks.memberFor
-import communAyfriID
+import com.kotlindiscord.kord.extensions.checks.types.CheckContext
 import dev.kord.core.event.Event
+import ownerID
 
-fun isOwner(): CheckFun {
-	suspend fun inner(event: Event): Boolean {
-		val guild = event.kord.getGuild(communAyfriID)!!
-		return guild.ownerId == memberFor(event)!!.id
-	}
-	
-	return ::inner
+suspend fun <T : Event> CheckContext<T>.isOwner() {
+	if (!passed) return
+	if (ownerID != memberFor(event)!!.id) fail()
 }

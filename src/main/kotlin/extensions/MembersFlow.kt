@@ -2,12 +2,14 @@ package extensions
 
 import com.kotlindiscord.kord.extensions.checks.inGuild
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.extensions.event
 import communAyfriID
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.event.guild.MemberJoinEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import kotlinx.coroutines.flow.count
 import utils.completeEmbed
+import utils.isOwner
 import welcomeChannelID
 
 class MembersFlow : Extension() {
@@ -15,7 +17,7 @@ class MembersFlow : Extension() {
 	
 	override suspend fun setup() {
 		event<MemberJoinEvent> {
-			check(inGuild(communAyfriID))
+			check { inGuild(communAyfriID) }
 			
 			action {
 				val welcomeChannel = event.guild.getChannel(welcomeChannelID) as TextChannel
@@ -31,7 +33,10 @@ class MembersFlow : Extension() {
 		}
 		
 		event<MemberLeaveEvent> {
-			check(inGuild(communAyfriID))
+			check {
+				inGuild(communAyfriID)
+				if (!passed) isOwner()
+			}
 			
 			action {
 				val welcomeChannel = event.guild.getChannel(welcomeChannelID) as TextChannel
