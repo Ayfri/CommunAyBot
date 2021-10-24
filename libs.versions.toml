@@ -1,0 +1,14 @@
+[versions]
+kotlin = "1.5.30"
+
+kord-extensions = "1.4.1-SNAPSHOT"
+logback = "1.2.3"
+kotlinLogging = "2.0.6"
+groovy = "3.0.7"
+
+[libraries]
+kord-extensions = { module = "com.kotlindiscord.kord.extensions:kord-extensions", version.ref = "kord-extensions" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+kotlinLogging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
+groovy = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }

@@ -1,13 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-val kordexVersion: String by project
-val logbackVersion: String by project
-val kotlinLoggingVersion: String by project
-val groovyVersion: String by project
-
 
 plugins {
-    kotlin("jvm") version "1.5.10"
     application
+    kotlin("jvm") version "1.5.31"
 }
 
 group = "fr.ayfri"
@@ -26,14 +21,12 @@ configurations.all {
 }
 
 dependencies {
-    implementation("com.kotlindiscord.kord.extensions:kord-extensions:$kordexVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-    implementation("org.codehaus.groovy:groovy:$groovyVersion")
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(libs.kord.extensions)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.logback)
+    implementation(libs.kotlinLogging)
+    implementation(libs.groovy)
 }
-
-
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
