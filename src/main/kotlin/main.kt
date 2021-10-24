@@ -17,7 +17,7 @@ lateinit var bot: ExtensibleBot
 suspend fun main() {
 	bot = ExtensibleBot(env("TOKEN")!!) {
 		extensions {
-			sentry = false
+			sentry { enable = false }
 			
 			help {
 				deletePaginatorOnTimeout = true

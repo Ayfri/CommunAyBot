@@ -38,7 +38,7 @@ class EasterEggs : Extension() {
 				}
 			}
 		}
-		
+
 		slashCommand {
 			name = "get-star"
 			description = "You got a superstar !"
@@ -47,9 +47,9 @@ class EasterEggs : Extension() {
 			action {
 				publicFollowUp {
 					content = """
-<a:power_star:851859990141993000> you got a star
-		<a:coin:851862634461921290> x ${(0..150).random()}
-					"""
+					|<a:power_star:851859990141993000> you got a star
+					|		<a:coin:851862634461921290> x ${(0..150).random()}
+					""".trimMargin()
 				}
 			}
 		}

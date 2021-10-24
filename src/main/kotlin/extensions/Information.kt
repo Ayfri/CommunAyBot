@@ -73,7 +73,7 @@ class Information : Extension() {
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.roles.title")
-							value = guild!!.roles.toList().filterNot { it.managed }.sortedBy { -it.rawPosition }.joinToString("\n") { it.mention }
+							value = guild!!.roles.toList().filterNot { it.managed }.sortedByDescending { it.rawPosition }.joinToString("\n") { it.mention }
 							inline = true
 						}
 					}
