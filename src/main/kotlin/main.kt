@@ -15,7 +15,11 @@ lateinit var bot: ExtensibleBot
 
 @OptIn(PrivilegedIntent::class, ExperimentalTime::class)
 suspend fun main() {
-	bot = ExtensibleBot(env("TOKEN")!!) {
+	bot = ExtensibleBot(env("TOKEN")) {
+		chatCommands {
+			enabled = true
+		}
+		
 		extensions {
 			sentry { enable = false }
 			
@@ -48,7 +52,7 @@ suspend fun main() {
 			all()
 		}
 		
-		slashCommands {
+		applicationCommands {
 			enabled = true
 			defaultGuild = communAyfriID
 		}

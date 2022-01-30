@@ -3,6 +3,7 @@ package utils
 import bot
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.createEmbed
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -11,7 +12,7 @@ import dev.kord.rest.builder.message.create.embed
 import kotlinx.datetime.Clock
 
 suspend inline fun MessageCreateBuilder.basicEmbed(builder: EmbedBuilder.() -> Unit) {
-	embed {
+	return embed {
 		val user = bot.getKoin().get<Kord>().getSelf(EntitySupplyStrategy.cacheWithRestFallback)
 		
 		footer {
@@ -24,8 +25,8 @@ suspend inline fun MessageCreateBuilder.basicEmbed(builder: EmbedBuilder.() -> U
 		builder()
 	}
 }
-suspend inline fun TextChannel.basicEmbed(builder: EmbedBuilder.() -> Unit) {
-	createEmbed {
+suspend inline fun TextChannel.basicEmbed(builder: EmbedBuilder.() -> Unit): Message {
+	return createEmbed {
 		val user = bot.getKoin().get<Kord>().getSelf(EntitySupplyStrategy.cacheWithRestFallback)
 		
 		footer {
@@ -41,15 +42,15 @@ suspend inline fun TextChannel.basicEmbed(builder: EmbedBuilder.() -> Unit) {
 
 
 suspend inline fun MessageCreateBuilder.completeEmbed(title: String = "", description: String = "", crossinline builder: suspend EmbedBuilder.() -> Unit) {
-	basicEmbed {
+	return basicEmbed {
 		this.title = title
 		this.description = description
 		
 		builder()
 	}
 }
-suspend inline fun TextChannel.completeEmbed(title: String = "", description: String = "", crossinline builder: suspend EmbedBuilder.() -> Unit) {
-	basicEmbed {
+suspend inline fun TextChannel.completeEmbed(title: String = "", description: String = "", crossinline builder: suspend EmbedBuilder.() -> Unit): Message {
+	return basicEmbed {
 		this.title = title
 		this.description = description
 		
@@ -59,7 +60,7 @@ suspend inline fun TextChannel.completeEmbed(title: String = "", description: St
 
 
 suspend inline fun MessageCreateBuilder.imageEmbed(url: String, title: String = "", description: String = "", crossinline builder: suspend EmbedBuilder.() -> Unit) {
-	completeEmbed(title, description) {
+	return completeEmbed(title, description) {
 		this.image = url
 		
 		builder()

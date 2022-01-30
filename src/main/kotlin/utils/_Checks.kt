@@ -7,5 +7,5 @@ import ownerID
 
 suspend fun <T : Event> CheckContext<T>.isOwner() {
 	if (!passed) return
-	if (ownerID != userFor(event)!!.id) fail()
+	if (ownerID != userFor(event)!!.id) fail("Vous n'êtes pas le propriétaire du serveur.")
 }
