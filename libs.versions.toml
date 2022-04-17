@@ -1,9 +1,9 @@
 [versions]
-kotlin = "1.5.30"
+kotlin = "1.6.10"
 
-kord-extensions = "1.5.1-RC1"
-logback = "1.2.6"
-kotlinLogging = "2.0.11"
+kord-extensions = "1.5.3-SNAPSHOT"
+logback = "1.2.10"
+kotlinLogging = "2.1.21"
 groovy = "3.0.9"
 
 [libraries]

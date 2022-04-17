@@ -2,12 +2,11 @@ package extensions
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
-import com.kotlindiscord.kord.extensions.types.respond
 import dev.kord.common.annotation.KordPreview
+import utils.respond
 
-@OptIn(KordPreview::class)
 class Links : Extension() {
-	override val name: String = "Links"
+	override val name = "Links"
 	
 	override suspend fun setup() {
 		publicSlashCommand {
@@ -15,9 +14,7 @@ class Links : Extension() {
 			description = "extensions.links.github.description"
 			
 			action {
-				respond {
-					content = "https://github.com/Ayfri"
-				}
+				respond("https://github.com/Ayfri")
 			}
 		}
 		
@@ -26,9 +23,7 @@ class Links : Extension() {
 			description = "extensions.links.twitch.description"
 			
 			action {
-				respond {
-					content = "https://twitch.tv/Ayfri1015"
-				}
+				respond("https://twitch.tv/Ayfri1015")
 			}
 		}
 	}

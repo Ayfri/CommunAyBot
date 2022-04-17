@@ -16,7 +16,7 @@ import utils.isOwner
 
 class Information : Extension() {
 	override val bundle = "communaybot"
-	override val name: String = "Information"
+	override val name = "Information"
 	
 	override suspend fun setup() {
 		chatCommand {
@@ -33,18 +33,18 @@ class Information : Extension() {
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.owner.title")
-							value = "${guild!!.asGuild().owner.mention} (`${guild!!.asGuild().ownerId.asString}`)"
+							value = "${guild!!.asGuild().owner.mention} (`${guild!!.asGuild().ownerId}`)"
 							inline = true
 						}
 						
-						val membersPresences = members.filterNot { it.isBot }.map { it.getPresenceOrNull()?.status }
+						val memberPresences = members.filterNot { it.isBot }.map { it.getPresenceOrNull()?.status }
 						
 						val bots = members.count { it.isBot }
-						val online = membersPresences.count { it == PresenceStatus.Online }
-						val idle = membersPresences.count { it == PresenceStatus.Idle }
-						val dnd = membersPresences.count { it == PresenceStatus.DoNotDisturb }
-						val invisible = membersPresences.count { it == PresenceStatus.Invisible }
-						val offline = membersPresences.count { it == null }
+						val online = memberPresences.count { it == PresenceStatus.Online }
+						val idle = memberPresences.count { it == PresenceStatus.Idle }
+						val dnd = memberPresences.count { it == PresenceStatus.DoNotDisturb }
+						val invisible = memberPresences.count { it == PresenceStatus.Invisible }
+						val offline = memberPresences.count { it == null }
 						
 						field {
 							name = translate("extensions.informations.guild-info.embed.fields.members.title")

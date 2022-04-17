@@ -1,3 +1,4 @@
+
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.i18n.SupportedLocales
 import com.kotlindiscord.kord.extensions.utils.env
@@ -8,7 +9,7 @@ import extensions.EasterEggs
 import extensions.Information
 import extensions.Links
 import extensions.MembersFlow
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
 
 lateinit var bot: ExtensibleBot
@@ -25,8 +26,9 @@ suspend fun main() {
 			
 			help {
 				deletePaginatorOnTimeout = true
-				paginatorTimeout = Duration.minutes(5).inWholeMilliseconds
+				paginatorTimeout = 5.minutes.inWholeMilliseconds
 			}
+			
 			add(::EasterEggs)
 			add(::Information)
 			add(::Links)
@@ -44,7 +46,7 @@ suspend fun main() {
 		
 		i18n {
 			defaultLocale = SupportedLocales.ENGLISH
-			localeResolver { _, _, _ -> SupportedLocales.FRENCH }
+			interactionUserLocaleResolver()
 		}
 		
 		members {
